@@ -1,0 +1,21 @@
+# 统一换行符，避免 Windows 贡献者提交出满屏 diff
+* text=auto eol=lf
+
+# 二进制资源不做换行符转换与 diff
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+
+# 构建产物与锁文件折叠进 diff 摘要
+dist/** linguist-generated=true
+pnpm-lock.yaml linguist-generated=true
+
+# 语法高亮
+*.ts linguist-language=TypeScript
+*.tsx linguist-language=TypeScript

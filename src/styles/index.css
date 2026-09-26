@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f5f0e6;
+  color: #3d3d3d;
+}
+
+/* 宣纸噪点纹理：叠加在卡片表面，multiply 混合出真实纸感 */
+.paper-noise {
+  position: relative;
+  isolation: isolate;
+}
+.paper-noise::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.055'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* 按钮呼吸墨晕 */
+@keyframes ink-breathe {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(139, 69, 19, 0.4); }
+  50% { box-shadow: 0 0 0 12px rgba(139, 69, 19, 0); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .btn-breathe { animation: ink-breathe 2.6s ease-out infinite; }
+}
