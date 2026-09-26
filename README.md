@@ -1,6 +1,7 @@
 # 16 型历史学人格测试 · historian-mbti
 
 [![CI](https://github.com/bluera17g-jpg/historian-mbti/actions/workflows/ci.yml/badge.svg)](https://github.com/bluera17g-jpg/historian-mbti/actions/workflows/ci.yml)
+[![Deploy](https://github.com/bluera17g-jpg/historian-mbti/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/bluera17g-jpg/historian-mbti/actions/workflows/deploy-pages.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
 一个纯前端的「历史学人格」测试：**32 道题 → 4 个维度 → 16 种史家人格**，测测你的史学气质更像陈寅恪、钱穆，还是布罗代尔、黄仁宇。
@@ -71,10 +72,20 @@ pnpm typecheck   # 类型检查（tsc --noEmit）
 pnpm build       # 生产构建，产物输出到 dist/
 ```
 
-构建产物是纯静态文件，可直接部署到任何静态托管（Netlify / Vercel / GitHub Pages / Nginx）。
+## 部署
 
-> 路由使用 HashRouter（URL 形如 `/#/test`），因此部署时**不需要**配置服务端 history fallback。
-> 如需改成 BrowserRouter，请自行补上「所有路径回落到 index.html」的重写规则。
+构建产物是纯静态文件，可直接部署到任何静态托管（GitHub Pages / Netlify / Vercel / Nginx）。
+
+**GitHub Pages（已自动化）**：推送到 `main` 后 `deploy-pages.yml` 会自动构建并发布到
+
+<https://bluera17g-jpg.github.io/historian-mbti/>
+
+首次运行会尝试自动开启 Pages；若仓库策略不允许，请到 **Settings → Pages** 把 Source 设为 **GitHub Actions**，再重跑该 workflow。
+
+> 路由使用 HashRouter（URL 形如 `/#/test`），且构建产物使用相对路径引用资源，
+> 因此部署在子路径（如 `/historian-mbti/`）下开箱可用，也**不需要**服务端 history fallback。
+> 如需改成 BrowserRouter，请自行补上「所有路径回落到 index.html」的重写规则，
+> 并在 `webpack.config.js` 中设置 `output.publicPath`。
 
 ## 目录结构
 
@@ -97,7 +108,9 @@ pnpm build       # 生产构建，产物输出到 dist/
 │   └── styles/index.css        Tailwind 入口与宣纸纹理
 ├── webpack.config.js           构建配置（开发端口 3266）
 ├── tailwind.config.js / postcss.config.js / tsconfig.json
-└── .github/workflows/ci.yml    类型检查 + 生产构建
+└── .github/workflows
+    ├── ci.yml                   类型检查 + 生产构建
+    └── deploy-pages.yml         构建并发布到 GitHub Pages
 ```
 
 ## 数据与隐私
